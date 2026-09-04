@@ -1,0 +1,1536 @@
+:root {
+  --ink: #060508;
+  --copy: #5f5c6f;
+  --muted: #a7a5ad;
+  --line: #e9e9e9;
+  --panel: #f9f9f9;
+  --white: #ffffff;
+  --hover: rgba(219, 219, 219, 0.3);
+  --pressed: rgba(196, 196, 203, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--panel);
+  color: var(--ink);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+img {
+  display: block;
+}
+
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Mona Sans Expanded";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/codera/fonts/MonaSansExpanded-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Mona Sans Expanded";
+  font-style: normal;
+  font-weight: 600;
+  src: url("/assets/codera/fonts/MonaSansExpanded-SemiBold.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Montreux Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/codera/fonts/MontreuxG-Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Montreux Grotesk";
+  font-style: normal;
+  font-weight: 600;
+  src: url("/assets/codera/fonts/MontreuxG-DmBd.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Montreux Classic";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/assets/codera/fonts/MontreuxC-Bd.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Montreux Classic";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/codera/fonts/MontreuxC-Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Montreux Classic";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/assets/codera/fonts/MontreuxC-RgIt.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Montreux Classic";
+  font-style: normal;
+  font-weight: 600;
+  src: url("/assets/codera/fonts/MontreuxC-DmBd.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Mona Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/codera/fonts/MonaSans-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Codera Mona Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/assets/codera/fonts/MonaSans-Medium.otf") format("opentype");
+}
+
+.codera-page {
+  --codera-ink: #0b0f06;
+  background: #fff;
+  color: var(--codera-ink);
+  font-family: "Codera Montreux Grotesk", Arial, sans-serif;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+.codera-page.is-demo-open { overflow-y: hidden; }
+
+.codera-hero {
+  background: transparent;
+  height: 480px;
+  min-height: 480px;
+  position: relative;
+  z-index: 20;
+}
+
+.codera-header {
+  align-items: flex-start;
+  background: transparent;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  left: 0;
+  box-sizing: border-box;
+  height: 104px;
+  padding: 28px 3.24vw;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translateY(0);
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 260ms ease;
+  z-index: 40;
+}
+
+.codera-header.is-hidden {
+  pointer-events: none;
+  transform: translateY(-110%);
+}
+
+.codera-header.is-visible {
+  transform: translateY(0);
+}
+
+.codera-header.is-scrolled {
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 0 rgba(11, 15, 6, 0.08);
+}
+
+.codera-nav,
+.codera-actions {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  height: 40px;
+  padding-top: 4px;
+}
+
+.codera-nav {
+  gap: 32px;
+  justify-self: start;
+}
+
+.codera-actions {
+  justify-self: end;
+}
+
+.codera-menu {
+  position: relative;
+}
+
+.codera-nav-trigger,
+.codera-language-trigger {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 600;
+  gap: 2px;
+  line-height: 20px;
+  margin: 0;
+  padding-block: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.codera-nav-trigger img,
+.codera-language-trigger img {
+  flex: 0 0 16px;
+  height: 16px;
+  transition: transform 160ms ease;
+  width: 16px;
+}
+
+.codera-trigger-label {
+  position: relative;
+}
+
+.codera-trigger-label::after {
+  background: currentColor;
+  bottom: -4px;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 220ms ease;
+  width: 100%;
+}
+
+.codera-nav-trigger:hover .codera-trigger-label::after,
+.codera-nav-trigger:focus-visible .codera-trigger-label::after,
+.codera-language-trigger:hover .codera-trigger-label::after,
+.codera-language-trigger:focus-visible .codera-trigger-label::after,
+.codera-menu:hover > .codera-nav-trigger .codera-trigger-label::after,
+.codera-menu:focus-within > .codera-nav-trigger .codera-trigger-label::after,
+.codera-menu:hover > .codera-language-trigger .codera-trigger-label::after,
+.codera-menu:focus-within > .codera-language-trigger .codera-trigger-label::after {
+  transform: scaleX(1);
+}
+
+.codera-menu:hover > .codera-nav-trigger img,
+.codera-menu:focus-within > .codera-nav-trigger img,
+.codera-menu:hover > .codera-language-trigger img,
+.codera-menu:focus-within > .codera-language-trigger img {
+  transform: rotate(180deg);
+}
+
+.codera-dropdown {
+  background: #fff;
+  border: 1px solid rgba(11, 15, 6, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 18px 45px rgba(11, 15, 6, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  left: -12px;
+  min-width: 280px;
+  opacity: 0;
+  padding: 8px;
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  transform: translateY(8px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+  visibility: hidden;
+  z-index: 10;
+}
+
+.codera-menu:hover > .codera-dropdown,
+.codera-menu:focus-within > .codera-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.codera-dropdown a {
+  border-radius: 8px;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  text-decoration: none;
+  transition: background-color 140ms ease;
+}
+
+.codera-dropdown a:hover,
+.codera-dropdown a:focus-visible {
+  background: #f3f5f1;
+  outline: none;
+}
+
+.codera-dropdown strong {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.codera-dropdown a > span {
+  color: rgba(11, 15, 6, 0.58);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.codera-language-dropdown {
+  left: auto;
+  min-width: 176px;
+  right: -8px;
+}
+
+.codera-language-dropdown button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.codera-language-dropdown button:hover,
+.codera-language-dropdown button:focus-visible,
+.codera-language-dropdown button.is-selected {
+  background: #f3f5f1;
+  outline: none;
+}
+
+.codera-language-dropdown button > span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.codera-language-dropdown small {
+  color: rgba(11, 15, 6, 0.48);
+  font-size: 12px;
+}
+
+.codera-logo {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 48px;
+  justify-self: center;
+  text-decoration: none;
+}
+
+.codera-logo img {
+  height: 20px;
+  width: 20px;
+}
+
+.codera-logo span {
+  font-family: "Codera Montreux Classic", "Codera Montreux Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.codera-demo-button {
+  background: var(--codera-ink);
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 10px 18px;
+  text-decoration: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.codera-demo-button:hover {
+  opacity: 0.82;
+}
+
+.codera-demo-button:active {
+  transform: scale(0.97);
+}
+
+.codera-demo-button:focus-visible,
+.codera-logo:focus-visible {
+  outline: 2px solid var(--codera-ink);
+  outline-offset: 4px;
+}
+
+.codera-hero-copy {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  left: 50%;
+  max-width: 933px;
+  position: absolute;
+  text-align: center;
+  top: 180px;
+  transform: translateX(-50%);
+  width: min(54vw, 933px);
+  z-index: 2;
+}
+
+.codera-hero-copy h1 {
+  font-family: "Codera Mona Sans Expanded", Arial, sans-serif;
+  font-size: clamp(64px, 5.56vw, 96px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 0.96;
+  margin: 0;
+}
+
+.codera-hero-copy p {
+  font-size: clamp(21px, 1.62vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 825px;
+}
+
+.codera-image-stage {
+  --image-scale: 1;
+  height: 100vh;
+  margin-top: -220px;
+  position: relative;
+  z-index: 1;
+}
+
+.codera-image-sticky {
+  align-items: flex-start;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.codera-image-frame {
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.codera-image-frame img {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 56%;
+  transform: scale(var(--image-scale));
+  transform-origin: center bottom;
+  transition: transform 80ms linear;
+  width: 100%;
+  will-change: transform;
+}
+
+.codera-business {
+  align-items: center;
+  background: #f6f6f6;
+  color: var(--codera-ink);
+  display: flex;
+  flex-direction: column;
+  gap: 76px;
+  min-height: 800px;
+  padding: 140px 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.codera-business-header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 795px;
+  text-align: center;
+  width: 100%;
+}
+
+.codera-business-header h2 {
+  font-family: "Codera Mona Sans Expanded", Arial, sans-serif;
+  font-size: 52px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 56px;
+  margin: 0;
+}
+
+.codera-business-header p {
+  font-size: 22px;
+  line-height: 36px;
+  margin: 0;
+}
+
+.codera-metrics {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1166px;
+  width: 100%;
+}
+
+.codera-metric-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 110px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  height: 328px;
+  overflow: hidden;
+  padding: 32px;
+}
+
+.codera-metric-tag {
+  align-self: flex-start;
+  background: #f5f5f5;
+  border-radius: 50px;
+  font-family: "Codera Montreux Classic", "Codera Montreux Grotesk", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 6px 13px 5px;
+}
+
+.codera-metric-value {
+  margin-top: 72px;
+}
+
+.codera-metric-value strong {
+  display: block;
+  font-family: "Codera Mona Sans Expanded", Arial, sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 48px;
+}
+
+.codera-metric-value h3 {
+  font-family: "Codera Montreux Classic", "Codera Montreux Grotesk", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.codera-metric-card > p {
+  font-family: "Codera Montreux Classic", "Codera Montreux Grotesk", sans-serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.36;
+  margin: 16px 0 0;
+  max-width: 318px;
+  opacity: 0.7;
+}
+
+.codera-solutions-statement {
+  align-items: flex-start;
+  background: #fff;
+  color: var(--codera-ink);
+  display: flex;
+  justify-content: center;
+  min-height: 760px;
+  padding: 140px 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.codera-solutions-statement > p {
+  font-family: "Codera Montreux Classic", "Codera Montreux Grotesk", sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 49.792px;
+  margin: 0;
+  max-width: 790px;
+  width: 100%;
+}
+
+.codera-solution-term {
+  -webkit-box-decoration-break: clone;
+  background: transparent;
+  box-decoration-break: clone;
+  border-radius: 3px;
+  color: inherit;
+  cursor: pointer;
+  display: inline;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
+}
+
+.codera-solution-term:hover,
+.codera-solution-term.is-active,
+.codera-solution-term:focus-visible {
+  background: var(--codera-ink);
+  box-shadow: 4px 0 0 var(--codera-ink), -4px 0 0 var(--codera-ink);
+  color: #fff;
+  outline: none;
+}
+
+.codera-solution-hint {
+  --hint-left: 50%;
+  --hint-top: 50%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 12px 18px 18px -4px rgba(0, 0, 0, 0.06), 0 4px 12px -4px rgba(0, 0, 0, 0.11);
+  color: var(--codera-ink);
+  cursor: default;
+  display: block;
+  height: 304px;
+  left: var(--hint-left);
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  text-align: left;
+  text-decoration: none;
+  top: var(--hint-top);
+  transform: translate(-50%, 8px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+  visibility: hidden;
+  white-space: normal;
+  width: 286px;
+  z-index: 20;
+}
+
+.codera-solution-hint.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+  visibility: visible;
+}
+
+.codera-results {
+  align-items: center;
+  background: #f6f6f6;
+  color: var(--codera-ink);
+  display: flex;
+  flex-direction: column;
+  min-height: 1360px;
+  padding: 140px 32px 132px;
+  position: relative;
+  z-index: 2;
+}
+
+.codera-results-header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 741px;
+  text-align: center;
+}
+
+.codera-results-header h2 {
+  font-family: "Codera Mona Sans Expanded", Arial, sans-serif;
+  font-size: 52px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 56px;
+  margin: 0;
+}
+
+.codera-results-header p {
+  font-family: "Codera Montreux Grotesk", sans-serif;
+  font-size: 22px;
+  line-height: 36px;
+  margin: 0;
+}
+
+.codera-results-card {
+  animation: codera-results-content-in 320ms ease both;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 110px rgba(0, 0, 0, 0.07);
+  height: 727px;
+  margin-top: 116px;
+  max-width: 1234px;
+  overflow: hidden;
+  padding: 72px 80px 0;
+  position: relative;
+  width: 100%;
+}
+
+.codera-results-card blockquote {
+  font-family: "Codera Montreux Classic", "Codera Montreux Grotesk", sans-serif;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 40px;
+  margin: 0;
+  max-width: 831px;
+}
+
+.codera-results-card blockquote em {
+  color: #14ac44;
+  font-style: normal;
+}
+
+.codera-results-card blockquote strong {
+  -webkit-box-decoration-break: clone;
+  background: var(--codera-ink);
+  box-decoration-break: clone;
+  color: #fff;
+  font-weight: 600;
+  padding: 0 3px;
+}
+
+.codera-results-person {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  left: 80px;
+  margin: 0;
+  position: absolute;
+  top: 280px;
+}
+
+.codera-results-avatar {
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  display: block;
+  height: 52px;
+  overflow: hidden;
+  width: 52px;
+}
+
+.codera-results-avatar.is-scan-avatar {
+  background-image: url("/assets/codera/results/avatar-v2.png");
+  background-size: cover;
+}
+
+.codera-results-avatar.is-generated-avatar {
+  background-image: url("/assets/codera/results/customer-avatars-v2.png");
+  background-position: var(--avatar-position);
+  background-size: 200% 200%;
+}
+
+.codera-results-person > span {
+  display: flex;
+  flex-direction: column;
+  font-family: "Codera Montreux Classic", "Codera Montreux Grotesk", sans-serif;
+  gap: 4px;
+}
+
+.codera-results-person strong {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.codera-results-person small {
+  font-size: 16px;
+  line-height: 20px;
+  opacity: 0.4;
+}
+
+.codera-results-chart {
+  height: 338px;
+  left: 80px;
+  margin: 0;
+  position: absolute;
+  right: 80px;
+  top: 388px;
+}
+
+.codera-chart-value {
+  font-family: "Codera Mona Sans", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  position: absolute;
+  top: 0;
+  z-index: 4;
+}
+
+.codera-chart-start-value {
+  left: 0;
+  opacity: 0.3;
+}
+
+.codera-chart-result-value {
+  bottom: var(--result-bottom, 64px);
+  color: #14ac44;
+  opacity: 0;
+  right: 0;
+  top: auto;
+  transform: translateY(10px);
+  transition: opacity 350ms ease 760ms, transform 350ms ease 760ms;
+}
+
+.codera-results.is-visible .codera-chart-result-value {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.codera-chart-axis {
+  height: 1px;
+  left: 0;
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+}
+
+.codera-chart-axis-top { top: 38px; }
+.codera-chart-axis-bottom { bottom: 58px; }
+
+.codera-chart-grid {
+  bottom: 58px;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 38px;
+}
+
+.codera-chart-grid span {
+  border-left: 1px dashed rgba(11, 15, 6, 0.2);
+  height: 100%;
+  width: 1px;
+}
+
+.codera-chart-curve-wrap {
+  bottom: 58px;
+  clip-path: inset(0 100% 0 0);
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 38px;
+}
+
+.codera-results.is-visible .codera-chart-curve-wrap {
+  animation: codera-chart-reveal 1200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.codera-chart-curve {
+  height: 100%;
+  transform: scaleY(var(--curve-depth, 1));
+  transform-origin: left top;
+  width: 100%;
+}
+
+.codera-chart-start-marker {
+  height: 52px;
+  left: -25px;
+  opacity: 0;
+  position: absolute;
+  top: 12px;
+  transform: scale(0.7);
+  transition: opacity 240ms ease, transform 380ms ease;
+  width: 52px;
+  z-index: 3;
+}
+
+.codera-results.is-visible .codera-chart-start-marker {
+  animation: codera-chart-marker-in 380ms ease both;
+}
+
+.codera-chart-months {
+  bottom: 20px;
+  display: flex;
+  font-family: "Codera Mona Sans", Arial, sans-serif;
+  font-size: 16px;
+  justify-content: space-between;
+  left: 0;
+  opacity: 0.4;
+  position: absolute;
+  right: 0;
+}
+
+.codera-client-logos {
+  display: flex;
+  gap: 12px;
+  margin-top: 64px;
+  max-width: 808px;
+  width: 100%;
+}
+
+.codera-client-logo {
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(11, 15, 6, 0.14);
+  border-radius: 12px;
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  margin: 0;
+  padding: 0 24px;
+  cursor: pointer;
+  width: auto;
+  transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+.codera-client-logo:hover .codera-client-logo-art { opacity: 0.58; }
+.codera-client-logo:focus-visible { outline: 2px solid var(--codera-ink); outline-offset: 3px; }
+.codera-client-logo.is-active { border-color: var(--codera-ink); transform: translateY(-1px); }
+.codera-client-logo.is-active .codera-client-logo-art { filter: none; opacity: 1; }
+
+.codera-client-logo-art {
+  display: block;
+  filter: grayscale(1);
+  opacity: 0.3;
+  position: relative;
+  transition: filter 180ms ease, opacity 180ms ease;
+}
+
+.codera-xpo-logo { width: 173px; }
+.codera-scan-logo { width: 188px; }
+.codera-fedex-logo { width: 116px; }
+.codera-amazon-logo { width: 122px; }
+.codera-exxon-logo { border-color: transparent; padding: 0; width: 161px; }
+.codera-exxon-logo.is-active { border-color: transparent; }
+
+.codera-xpo-art { height: 20px; width: 133px; }
+.codera-xpo-art img { position: absolute; }
+.codera-xpo-art img:first-child { height: 16px; left: 0; top: 0; width: 45px; }
+.codera-xpo-art img:last-child { height: 19px; left: 46px; top: 0; width: 87px; }
+
+.codera-scan-art { height: 26px; width: 152px; }
+.codera-scan-art img { position: absolute; }
+.codera-scan-art img:first-child { height: 12px; left: 0; top: 0; width: 151px; }
+.codera-scan-art img:last-child { height: 12px; left: 46px; top: 14px; width: 105px; }
+
+.codera-fedex-art { height: 24px; width: 77px; }
+.codera-fedex-art img { position: absolute; top: 0; }
+.codera-fedex-art img:first-child { height: 24px; left: 0; width: 45px; }
+.codera-fedex-art img:last-child { height: 23px; left: 45px; width: 32px; }
+
+.codera-amazon-art { height: 25px; width: 82px; }
+.codera-amazon-art img { height: 25px; width: 82px; }
+.codera-exxon-art, .codera-exxon-art img { height: 60px; width: 161px; }
+
+@keyframes codera-results-content-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes codera-chart-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes codera-chart-marker-in {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.codera-compatibility {
+  align-items: center;
+  background: #fff;
+  color: var(--codera-ink);
+  display: grid;
+  gap: 123px;
+  grid-template-columns: 556px 553px;
+  justify-content: center;
+  padding: 140px 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.codera-compatibility-content { display: flex; flex-direction: column; gap: 80px; padding-block: 48px; }
+.codera-compatibility h2,
+.codera-news h2,
+.codera-faq h2 {
+  font-family: "Codera Mona Sans Expanded", Arial, sans-serif;
+  font-size: 52px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 56px;
+  margin: 0;
+}
+
+.codera-compatibility h2 { max-width: 521px; }
+.codera-compatibility-list { display: flex; flex-direction: column; gap: 48px; }
+.codera-compatibility-list article { align-items: flex-start; display: flex; gap: 16px; }
+.codera-compatibility-icon { align-items: center; display: flex; flex: 0 0 40px; height: 40px; justify-content: center; width: 40px; }
+.codera-compatibility-icon img { display: block; height: 40px; width: 40px; }
+.codera-compatibility-list article > div { flex: 1 1 auto; min-width: 0; }
+.codera-compatibility-list h3 { align-items: center; display: flex; font-family: "Codera Montreux Grotesk", sans-serif; font-size: 24px; font-weight: 600; height: 40px; line-height: 1.3; margin: 0; }
+.codera-compatibility-list p { font-family: "Codera Montreux Grotesk", sans-serif; font-size: 18px; line-height: 1.46; margin: 12px 0 0; }
+.codera-compatibility-visual { background: #d2d8dc; border-radius: 20px; height: 872px; overflow: hidden; position: relative; }
+.codera-compatibility-visual img { height: 100%; inset: 0; object-fit: cover; position: absolute; width: 100%; }
+.codera-compatibility-visual img:first-child { object-position: 58% center; }
+.codera-compatibility-visual img:last-child { mix-blend-mode: normal; object-position: 58% center; }
+
+.codera-news {
+  align-items: center;
+  background: #f6f6f6;
+  color: var(--codera-ink);
+  display: flex;
+  flex-direction: column;
+  padding: 140px 32px;
+  position: relative;
+  z-index: 2;
+}
+.codera-news > header { display: flex; flex-direction: column; gap: 24px; max-width: 741px; text-align: center; }
+.codera-news > header p { font-family: "Codera Montreux Grotesk", sans-serif; font-size: 22px; line-height: 36px; margin: 0; }
+.codera-news-grid { display: grid; gap: 24px; grid-template-columns: repeat(3, 1fr); margin-top: 64px; max-width: 1232px; width: 100%; }
+.codera-news-card { background: #fff; border-radius: 20px; box-shadow: 0 4px 110px rgba(0,0,0,.07); display: flex; flex-direction: column; height: 536px; overflow: hidden; transition: box-shadow 280ms ease, transform 280ms cubic-bezier(.22,1,.36,1); }
+.codera-news-image { height: 281px; padding: 8px 8px 0; }
+.codera-news-image > div { border-radius: 12px; height: 273px; overflow: hidden; }
+.codera-news-image img { display: block; height: 100%; object-fit: cover; transition: transform 480ms cubic-bezier(.22,1,.36,1); width: 100%; }
+.codera-news-card:hover { box-shadow: 0 22px 96px rgba(11,15,6,.14); transform: translateY(-8px); }
+.codera-news-card:hover .codera-news-image img { transform: scale(1.065); }
+.codera-news-card:nth-child(1) .codera-news-image img { object-position: center 44%; }
+.codera-news-card:nth-child(2) .codera-news-image img { object-position: center 70%; }
+.codera-news-card:nth-child(3) .codera-news-image img { object-position: center; }
+.codera-news-copy { display: flex; flex: 1; flex-direction: column; font-family: "Codera Montreux Grotesk", sans-serif; justify-content: space-between; padding: 24px; }
+.codera-news-copy h3 { font-size: 24px; font-weight: 600; line-height: 1.3; margin: 0; }
+.codera-news-copy p { display: -webkit-box; font-size: 18px; line-height: 1.46; margin: 12px 0 0; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.codera-news-copy time { font-size: 16px; line-height: 1.36; }
+.codera-news-actions { display: flex; gap: 12px; margin-top: 64px; }
+.codera-news-actions a { align-items: center; background: #ececec; border-radius: 500px; color: inherit; display: flex; font-family: "Codera Montreux Grotesk", sans-serif; font-size: 16px; font-weight: 600; height: 48px; justify-content: center; text-decoration: none; transition: background-color 180ms ease, color 180ms ease, transform 160ms ease; width: 140px; }
+.codera-news-actions a:first-child { background: var(--codera-ink); color: #fff; }
+.codera-news-actions a:hover,
+.codera-news-actions a:focus-visible { background: #ddd; outline: none; }
+.codera-news-actions a:first-child:hover,
+.codera-news-actions a:first-child:focus-visible { background: #292d25; }
+.codera-news-actions a:focus-visible { box-shadow: 0 0 0 2px #f6f6f6, 0 0 0 4px var(--codera-ink); }
+.codera-news-actions a:active { transform: scale(.97); }
+
+.codera-faq {
+  background: #fff;
+  color: var(--codera-ink);
+  display: grid;
+  gap: 169px;
+  grid-template-columns: 453px 604px;
+  justify-content: center;
+  min-height: 940px;
+  padding: 140px 32px;
+  position: relative;
+  z-index: 2;
+}
+.codera-faq-intro { display: flex; flex-direction: column; gap: 32px; }
+.codera-faq-intro > p { font-family: "Codera Montreux Grotesk", sans-serif; font-size: 18px; line-height: 1.46; margin: 0; max-width: 358px; }
+.codera-faq-intro a { color: inherit; }
+.codera-faq-list { display: flex; flex-direction: column; gap: 32px; }
+.codera-faq-item > button { align-items: flex-start; background: transparent; border: 0; color: inherit; cursor: pointer; display: flex; font-family: "Codera Montreux Grotesk", sans-serif; font-size: 24px; font-weight: 600; gap: 16px; line-height: 36px; margin: 0; padding: 0; text-align: left; width: 100%; }
+.codera-faq-plus { align-items: center; display: flex; flex: 0 0 32px; height: 32px; justify-content: center; margin-top: 2px; }
+.codera-faq-plus img { height: 18px; transition: transform 280ms cubic-bezier(.22,1,.36,1); width: 18px; }
+.codera-faq-item.is-open .codera-faq-plus img { transform: rotate(45deg); }
+.codera-faq-answer { display: grid; grid-template-rows: 0fr; margin-left: 48px; transition: grid-template-rows 300ms cubic-bezier(.22,1,.36,1), margin-top 300ms ease; }
+.codera-faq-answer > div { overflow: hidden; }
+.codera-faq-answer p { font-family: "Codera Montreux Grotesk", sans-serif; font-size: 18px; line-height: 1.46; margin: 0; max-width: 548px; }
+.codera-faq-item.is-open .codera-faq-answer { grid-template-rows: 1fr; margin-top: 16px; }
+
+.codera-final-cta { background: #fff; padding: 0 32px; position: relative; z-index: 2; }
+.codera-final-cta > div { background: var(--codera-ink); border-radius: 20px; color: #fff; height: 320px; margin: 0 auto; max-width: 1232px; overflow: hidden; padding: 68px 86px; }
+.codera-final-cta h2 { font-family: "Codera Mona Sans Expanded", Arial, sans-serif; font-size: 36px; font-weight: 400; line-height: 44px; margin: 0; max-width: 729px; }
+.codera-final-cta h2 + div { display: flex; gap: 12px; margin-top: 48px; }
+.codera-final-cta a,
+.codera-final-cta button { align-items: center; background: rgba(255,255,255,.06); border: 0; border-radius: 500px; color: #fff; cursor: pointer; display: flex; font-family: "Codera Montreux Grotesk", sans-serif; font-size: 16px; font-weight: 600; height: 48px; justify-content: center; padding: 0 20px; text-decoration: none; transition: background-color 180ms ease, color 180ms ease, transform 160ms ease; }
+.codera-final-cta button:first-child { background: #fff; color: var(--codera-ink); width: 140px; }
+.codera-final-cta a:hover,
+.codera-final-cta a:focus-visible,
+.codera-final-cta button:hover,
+.codera-final-cta button:focus-visible { background: rgba(255,255,255,.15); outline: none; }
+.codera-final-cta button:first-child:hover,
+.codera-final-cta button:first-child:focus-visible { background: #dfe0df; }
+.codera-final-cta a:focus-visible,
+.codera-final-cta button:focus-visible { box-shadow: 0 0 0 2px var(--codera-ink), 0 0 0 4px #fff; }
+.codera-final-cta a:active,
+.codera-final-cta button:active { transform: scale(.97); }
+
+.codera-footer { background: #fff; color: var(--codera-ink); font-family: "Codera Montreux Grotesk", sans-serif; position: relative; z-index: 2; }
+.codera-footer-main { display: flex; justify-content: space-between; margin: 0 auto; max-width: 1232px; min-height: 368px; padding-top: 140px; }
+.codera-footer-brand { display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 96px; }
+.codera-footer-brand > a { align-items: center; color: inherit; display: flex; gap: 12px; text-decoration: none; }
+.codera-footer-brand > a img { height: 28px; width: 28px; }
+.codera-footer-brand > a strong { font-family: "Codera Montreux Classic", sans-serif; font-size: 18px; text-transform: uppercase; }
+.codera-footer-brand > div { display: flex; gap: 24px; }
+.codera-footer a { color: inherit; text-decoration: none; }
+.codera-footer-brand > div a,
+.codera-footer nav a { position: relative; width: max-content; }
+.codera-footer-brand > div a::after,
+.codera-footer nav a::after { background: currentColor; bottom: -3px; content: ""; height: 1px; left: 0; position: absolute; transform: scaleX(0); transform-origin: left center; transition: transform 220ms ease; width: 100%; }
+.codera-footer-brand > div a:hover::after,
+.codera-footer-brand > div a:focus-visible::after,
+.codera-footer nav a:hover::after,
+.codera-footer nav a:focus-visible::after { transform: scaleX(1); }
+.codera-footer-brand > div a:focus-visible,
+.codera-footer nav a:focus-visible { outline: none; }
+.codera-footer nav { display: flex; gap: 80px; }
+.codera-footer nav > div { display: flex; flex-direction: column; gap: 8px; min-width: 94px; }
+.codera-footer nav > .codera-footer-legal { gap: 8px; }
+.codera-footer-bottom { align-items: center; background: #f6f6f6; display: flex; font-size: 12px; height: 48px; justify-content: center; }
+
+.codera-demo-modal { align-items: center; background: rgba(11,15,6,.62); display: flex; inset: 0; justify-content: center; opacity: 0; padding: 32px; pointer-events: none; position: fixed; transition: opacity 220ms ease, visibility 220ms ease; visibility: hidden; z-index: 100; }
+.codera-demo-modal.is-open { opacity: 1; pointer-events: auto; visibility: visible; }
+.codera-demo-dialog { background: #fff; border-radius: 20px; box-shadow: 0 30px 110px rgba(0,0,0,.22); color: var(--codera-ink); max-height: calc(100dvh - 64px); max-width: 720px; overflow-y: auto; padding: 48px; position: relative; transform: translateY(18px) scale(.985); transition: transform 280ms cubic-bezier(.22,1,.36,1); width: 100%; }
+.codera-demo-modal.is-open .codera-demo-dialog { transform: translateY(0) scale(1); }
+.codera-demo-close { align-items: center; background: #f1f1f1; border: 0; border-radius: 50%; cursor: pointer; display: flex; height: 40px; justify-content: center; position: absolute; right: 24px; top: 24px; transition: background-color 160ms ease, transform 160ms ease; width: 40px; }
+.codera-demo-close:hover { background: #dedede; }
+.codera-demo-close:active { transform: scale(.94); }
+.codera-demo-close:focus-visible { outline: 2px solid var(--codera-ink); outline-offset: 3px; }
+.codera-demo-close span,
+.codera-demo-close span::after { background: currentColor; content: ""; height: 1.5px; position: absolute; transform: rotate(45deg); width: 16px; }
+.codera-demo-close span::after { transform: rotate(90deg); }
+.codera-demo-heading > span,
+.codera-demo-success > span { color: #14ac44; display: block; font-size: 14px; font-weight: 600; letter-spacing: .04em; line-height: 20px; text-transform: uppercase; }
+.codera-demo-heading h2,
+.codera-demo-success h2 { font-family: "Codera Mona Sans Expanded", Arial, sans-serif; font-size: 42px; font-weight: 600; letter-spacing: -.02em; line-height: 46px; margin: 16px 64px 0 0; }
+.codera-demo-heading p,
+.codera-demo-success p { font-size: 18px; line-height: 1.46; margin: 20px 0 0; max-width: 560px; }
+.codera-demo-dialog form { display: grid; gap: 20px 16px; grid-template-columns: repeat(2, minmax(0,1fr)); margin-top: 36px; }
+.codera-demo-dialog label { display: flex; flex-direction: column; font-size: 14px; font-weight: 600; gap: 8px; line-height: 20px; }
+.codera-demo-dialog input,
+.codera-demo-dialog select,
+.codera-demo-dialog textarea { background: #f6f6f6; border: 1px solid transparent; border-radius: 10px; color: var(--codera-ink); font: 400 16px/22px "Codera Montreux Grotesk", sans-serif; min-height: 48px; outline: none; padding: 12px 14px; transition: background-color 160ms ease, border-color 160ms ease; width: 100%; }
+.codera-demo-dialog select { appearance: none; background-image: url("/assets/codera/caret.svg"); background-position: right 14px center; background-repeat: no-repeat; background-size: 16px; cursor: pointer; padding-right: 44px; }
+.codera-demo-dialog textarea { min-height: 96px; resize: vertical; }
+.codera-demo-dialog input:focus,
+.codera-demo-dialog select:focus,
+.codera-demo-dialog textarea:focus { background: #fff; border-color: var(--codera-ink); }
+.codera-demo-message { grid-column: 1 / -1; }
+.codera-demo-submit,
+.codera-demo-success button { background: var(--codera-ink); border: 0; border-radius: 500px; color: #fff; cursor: pointer; font: 600 16px/20px "Codera Montreux Grotesk", sans-serif; height: 48px; justify-self: start; margin-top: 4px; padding: 0 24px; transition: opacity 160ms ease, transform 160ms ease; }
+.codera-demo-submit:hover,
+.codera-demo-success button:hover { opacity: .82; }
+.codera-demo-submit:active,
+.codera-demo-success button:active { transform: scale(.97); }
+.codera-demo-submit:focus-visible,
+.codera-demo-success button:focus-visible { outline: 2px solid var(--codera-ink); outline-offset: 3px; }
+.codera-demo-success { min-height: 360px; padding-top: 72px; }
+.codera-demo-success button { margin-top: 32px; }
+
+.codera-solution-hint > img {
+  border-radius: 7px 7px 2px 2px;
+  height: 144px;
+  left: 3px;
+  object-fit: cover;
+  object-position: bottom;
+  position: absolute;
+  top: 3px;
+  width: 280px;
+}
+
+.codera-solution-hint-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  left: 24px;
+  position: absolute;
+  top: 167px;
+  width: 238px;
+}
+
+.codera-solution-hint-copy > span {
+  font-family: "Codera Mona Sans", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.36;
+}
+
+.codera-solution-hint-copy strong {
+  align-items: center;
+  display: flex;
+  font-family: "Codera Mona Sans", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  gap: 8px;
+  line-height: 20px;
+}
+
+.codera-solution-hint-copy strong img {
+  height: 8px;
+  width: 13px;
+}
+
+@media (max-width: 1100px) {
+  .codera-header {
+    padding-inline: 28px;
+  }
+
+  .codera-nav {
+    gap: 18px;
+  }
+
+  .codera-hero-copy {
+    width: min(76vw, 780px);
+  }
+
+  .codera-business {
+    padding-inline: 24px;
+  }
+
+  .codera-metrics {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    overflow-x: auto;
+    padding: 0 2px 24px;
+  }
+
+  .codera-compatibility {
+    gap: 64px;
+    grid-template-columns: minmax(420px, 556px) minmax(360px, 480px);
+    padding-inline: 24px;
+  }
+
+  .codera-news-grid { overflow-x: auto; padding: 0 2px 28px; }
+  .codera-news-card { min-width: 360px; }
+
+  .codera-faq { gap: 80px; grid-template-columns: minmax(340px, 453px) minmax(480px, 604px); padding-inline: 24px; }
+  .codera-footer-main { padding-inline: 32px; }
+  .codera-footer nav { gap: 36px; }
+}
+
+@media (max-width: 980px) {
+  .codera-header { align-items: center; grid-template-columns: 1fr auto; height: 96px; padding: 24px 28px; }
+  .codera-nav { display: none; }
+  .codera-logo { grid-column: 1; grid-row: 1; justify-self: start; }
+  .codera-actions { grid-column: 2; padding-top: 4px; }
+
+  .codera-hero-copy { top: 156px; width: min(82vw, 760px); }
+  .codera-hero-copy h1 { font-size: clamp(58px, 9vw, 78px); }
+
+  .codera-results { padding-inline: 24px; }
+  .codera-results-card { padding-inline: 48px; }
+  .codera-results-person { left: 48px; }
+  .codera-results-chart { left: 48px; right: 48px; }
+  .codera-client-logos { overflow-x: auto; padding: 2px 2px 14px; scrollbar-width: none; }
+  .codera-client-logos::-webkit-scrollbar { display: none; }
+  .codera-client-logo { flex: 0 0 auto; }
+
+  .codera-compatibility { display: flex; flex-direction: column; gap: 72px; padding: 112px 24px; }
+  .codera-compatibility-content { max-width: 720px; padding: 0; width: 100%; }
+  .codera-compatibility-visual { height: min(92vw, 720px); max-width: 720px; width: 100%; }
+
+  .codera-faq { display: flex; flex-direction: column; gap: 72px; min-height: 0; padding: 112px 24px; }
+  .codera-faq-intro,
+  .codera-faq-list { margin-inline: auto; max-width: 720px; width: 100%; }
+
+  .codera-footer-main { gap: 72px; padding-bottom: 80px; }
+  .codera-footer-brand { gap: 40px; padding-bottom: 0; }
+}
+
+@media (max-width: 760px) {
+  .codera-hero {
+    height: 480px;
+  }
+
+  .codera-header {
+    align-items: center;
+    grid-template-columns: 1fr auto;
+    height: 88px;
+    padding: 20px;
+  }
+
+  .codera-nav {
+    display: none;
+  }
+
+  .codera-logo {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  .codera-actions {
+    grid-column: 2;
+  }
+
+  .codera-language-menu {
+    display: none;
+  }
+
+  .codera-demo-button {
+    font-size: 14px;
+    padding: 9px 14px;
+  }
+
+  .codera-hero-copy {
+    gap: 24px;
+    top: 146px;
+    width: calc(100% - 40px);
+  }
+
+  .codera-hero-copy h1 {
+    font-size: clamp(48px, 14vw, 72px);
+  }
+
+  .codera-hero-copy p {
+    font-size: 18px;
+  }
+
+  .codera-business {
+    gap: 52px;
+    padding: 96px 20px;
+  }
+
+  .codera-business-header h2 {
+    font-size: 42px;
+    line-height: 46px;
+  }
+
+  .codera-business-header p {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .codera-metrics {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .codera-metric-card {
+    height: 300px;
+  }
+
+  .codera-metric-value {
+    margin-top: 48px;
+  }
+
+  .codera-solutions-statement {
+    min-height: 680px;
+    padding: 96px 20px 140px;
+  }
+
+  .codera-solutions-statement > p {
+    font-size: 27px;
+    line-height: 1.42;
+  }
+
+  .codera-results {
+    min-height: auto;
+    padding: 96px 20px;
+  }
+
+  .codera-results-header h2 { font-size: 42px; line-height: 46px; }
+  .codera-results-header p { font-size: 18px; line-height: 28px; }
+  .codera-results-card { height: auto; margin-top: 72px; padding: 40px 24px 24px; }
+  .codera-results-card blockquote { font-size: 27px; line-height: 1.25; }
+  .codera-results-person { left: auto; margin-top: 28px; position: static; top: auto; }
+  .codera-results-person > span { min-width: 0; }
+  .codera-results-person small { font-size: 14px; }
+  .codera-results-chart { height: 280px; left: auto; margin-top: 48px; position: relative; right: auto; top: auto; }
+  .codera-client-logos { overflow-x: auto; padding-bottom: 12px; }
+  .codera-client-logo { flex: 0 0 auto; }
+
+  .codera-compatibility { display: flex; flex-direction: column; gap: 64px; padding: 96px 20px; }
+  .codera-compatibility-content { gap: 52px; padding: 0; }
+  .codera-compatibility-list h3 { height: auto; min-height: 40px; }
+  .codera-compatibility h2,
+  .codera-news h2,
+  .codera-faq h2 { font-size: 42px; line-height: 46px; }
+  .codera-compatibility-visual { height: min(132vw, 680px); width: 100%; }
+
+  .codera-news { padding: 96px 20px; }
+  .codera-news > header p { font-size: 18px; line-height: 28px; }
+  .codera-news-grid { grid-template-columns: 1fr; max-width: 420px; overflow: visible; padding: 0; }
+  .codera-news-card { min-width: 0; }
+
+  .codera-faq { display: flex; flex-direction: column; gap: 64px; min-height: 0; padding: 96px 20px; }
+  .codera-faq-intro { gap: 32px; }
+  .codera-faq-item > button { font-size: 21px; line-height: 30px; }
+
+  .codera-final-cta { padding: 0 20px; }
+  .codera-final-cta > div { height: auto; min-height: 320px; padding: 48px 28px; }
+  .codera-final-cta h2 { font-size: 30px; line-height: 38px; }
+  .codera-final-cta h2 + div { align-items: flex-start; flex-direction: column; }
+
+  .codera-footer-main { flex-direction: column; gap: 64px; padding: 80px 20px; }
+  .codera-footer-brand { gap: 48px; padding: 0; }
+  .codera-footer nav { display: grid; gap: 40px 24px; grid-template-columns: repeat(2, 1fr); }
+
+  .codera-demo-modal { padding: 16px; }
+  .codera-demo-dialog { max-height: calc(100dvh - 32px); padding: 36px 20px 24px; }
+  .codera-demo-close { right: 16px; top: 16px; }
+  .codera-demo-heading h2,
+  .codera-demo-success h2 { font-size: 32px; line-height: 36px; margin-right: 44px; }
+  .codera-demo-heading p,
+  .codera-demo-success p { font-size: 16px; }
+  .codera-demo-dialog form { grid-template-columns: 1fr; margin-top: 28px; }
+  .codera-demo-message { grid-column: auto; }
+}
+
+@media (max-width: 480px) {
+  .codera-header { height: 80px; padding: 16px; }
+  .codera-logo { gap: 3px; height: 44px; }
+  .codera-logo img { height: 18px; width: 18px; }
+  .codera-demo-button { padding-inline: 13px; }
+
+  .codera-hero { height: 440px; min-height: 440px; }
+  .codera-hero-copy { gap: 20px; top: 124px; width: calc(100% - 32px); }
+  .codera-hero-copy h1 { font-size: clamp(40px, 13vw, 54px); line-height: .98; }
+  .codera-hero-copy p { font-size: 16px; line-height: 1.45; }
+  .codera-image-stage { margin-top: -180px; }
+
+  .codera-business,
+  .codera-solutions-statement,
+  .codera-results,
+  .codera-compatibility,
+  .codera-news,
+  .codera-faq { padding-inline: 16px; }
+  .codera-business-header h2,
+  .codera-results-header h2,
+  .codera-compatibility h2,
+  .codera-news h2,
+  .codera-faq h2 { font-size: 36px; line-height: 40px; }
+  .codera-metric-card { padding: 28px 24px; }
+  .codera-solutions-statement > p { font-size: 24px; }
+
+  .codera-results-card { margin-top: 56px; padding: 32px 20px 20px; }
+  .codera-results-card blockquote { font-size: 24px; }
+  .codera-results-person { align-items: flex-start; gap: 12px; }
+  .codera-results-avatar { flex: 0 0 48px; height: 48px; width: 48px; }
+  .codera-results-person strong { font-size: 17px; }
+  .codera-results-person small { line-height: 18px; }
+  .codera-results-chart { height: 240px; }
+
+  .codera-compatibility-list article { gap: 12px; }
+  .codera-compatibility-list h3 { font-size: 21px; }
+  .codera-compatibility-list p { font-size: 16px; }
+  .codera-compatibility-visual { border-radius: 16px; }
+
+  .codera-news-card { height: 510px; }
+  .codera-news-image { height: 248px; }
+  .codera-news-image > div { height: 240px; }
+  .codera-news-copy { padding: 20px; }
+  .codera-news-copy h3 { font-size: 21px; }
+  .codera-news-copy p { font-size: 16px; }
+  .codera-news-actions { gap: 8px; width: 100%; }
+  .codera-news-actions a { flex: 1 1 0; width: auto; }
+
+  .codera-faq-item > button { font-size: 19px; gap: 12px; line-height: 27px; }
+  .codera-faq-plus { flex-basis: 28px; height: 28px; }
+  .codera-faq-answer { margin-left: 40px; }
+
+  .codera-final-cta { padding-inline: 16px; }
+  .codera-final-cta > div { border-radius: 16px; padding: 40px 24px; }
+  .codera-final-cta h2 { font-size: 28px; line-height: 35px; }
+  .codera-final-cta h2 + div { margin-top: 36px; }
+  .codera-final-cta a,
+  .codera-final-cta button { max-width: 100%; }
+
+  .codera-footer-main { padding-inline: 16px; }
+  .codera-footer nav { gap: 36px 16px; }
+  .codera-footer nav > div { min-width: 0; }
+
+  .codera-demo-dialog select { background-position: right 12px center; padding-right: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .codera-page {
+    scroll-behavior: auto;
+  }
+
+  .codera-demo-button {
+    transition: none;
+  }
+
+  .codera-news-actions a,
+  .codera-final-cta a,
+  .codera-final-cta button,
+  .codera-news-card,
+  .codera-news-image img,
+  .codera-footer-brand > div a::after,
+  .codera-footer nav a::after {
+    transition: none;
+  }
+
+  .codera-demo-modal,
+  .codera-demo-dialog,
+  .codera-demo-close,
+  .codera-demo-submit,
+  .codera-demo-success button {
+    transition: none;
+  }
+
+  .codera-header {
+    transition: none;
+  }
+
+  .codera-trigger-label::after,
+  .codera-dropdown,
+  .codera-nav-trigger img,
+  .codera-language-trigger img {
+    transition: none;
+  }
+
+  .codera-image-frame img {
+    transition: none;
+  }
+
+  .codera-solution-term,
+  .codera-solution-hint,
+  .codera-chart-curve-wrap,
+  .codera-chart-result-value,
+  .codera-chart-start-marker {
+    transition: none;
+  }
+
+  .codera-results-card,
+  .codera-results.is-visible .codera-chart-curve-wrap,
+  .codera-results.is-visible .codera-chart-start-marker {
+    animation: none;
+  }
+
+  .codera-results.is-visible .codera-chart-curve-wrap { clip-path: inset(0 0 0 0); }
+  .codera-results.is-visible .codera-chart-start-marker { opacity: 1; transform: scale(1); }
+}
