@@ -41,6 +41,8 @@ public/
 
 The demo-request form is presentation-only and does not transmit or store submitted data. Replace the placeholder email and social destinations before production use.
 
+The page shows a dismissible first-visit notice identifying it as an independent, non-commercial Conceptzilla portfolio concept rather than a live service or client-commissioned product.
+
 ## Assets
 
 Fonts, photographs, generated imagery, and third-party brand marks are included as project assets. Confirm the applicable usage rights before public or commercial deployment.
